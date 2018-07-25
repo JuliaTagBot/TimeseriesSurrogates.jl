@@ -27,7 +27,7 @@ include("randomamplitudes.jl")
 include("aaft.jl")
 include("iaaft.jl")
 include("wiaaft.jl")
-
+include("twinsurrogates.jl")
 
 # Define and export plot routines for all combinations of example processes and surrogate
 # types
@@ -37,6 +37,6 @@ include("plots_and_anim.jl")
 
 
 export NLNS, NSAR2, AR1, randomwalk, SNLST,
-        randomshuffle, randomamplitudes, randomphases, aaft, iaaft, wiaaft
+        randomshuffle, randomamplitudes, randomphases, aaft, iaaft, wiaaft, twin
 
 end # module

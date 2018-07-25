@@ -1,5 +1,5 @@
 using Base.Test
-using TimeseriesSurrogates
+using TimeseriesSurrogates, StateSpaceReconstruction
 ENV["GKSwstype"] = "100"
 
 ts = cumsum(randn(1000))
@@ -46,7 +46,22 @@ ts = cumsum(randn(1000))
         @test all(sort(ts) .== sort(surrogates[end]))
     end
 
-    @testset "WIAAFT" begin
-        wiaaft(ts)
+    @testset "Twin surrogates" begin
+
+        ts1 = AR1(500, 0.1, 0.4)
+        ts2 = AR1(500, 0.1, 0.4)
+        ts3 = AR1(500, 0.1, 0.4)
+        embedding = [ts1 ts2 ts3].'
+
+
+
+        twinsurrogate = twin(embedding, 0.2)
+        or, su = embedding[1, :], twinsurrogate[1, :]
+        @test length(setdiff(su, or)) == 0
+        @test size(embedding) ==  size(twinsurrogate)
     end
+
+    #@testset "WIAAFT" begin
+    #    wiaaft(ts)
+    #end
 end
